@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <title>Login Form</title>
+
+</head>
+
+<body>
+
+  <div class="login-container">
+
+    <h1>Log in Form</h1>
+
+    <form id="loginForm">
+
+      <div id="loginFields">
+
+        <label for="email">Phone number or Email</label>
+
+        <input type="text" id="email" required>
+
+        <label for="password">Password</label>
+
+        <input type="password" id="password" required>
+
+      </div>
+
+      <div id="forgotPasswordFields" class="hidden">
+
+        <label for="newPassword">New Password</label>
+
+        <input type="password" id="newPassword" required>
+
+        <label for="confirmPassword">Confirm Password</label>
+
+        <input type="password" id="confirmPassword" required>
+
+        <button type="button" onclick="submitForgotPassword()">Enter</button>
+
+      </div>
+
+      <div id="createAccountFields" class="hidden">
+
+        <label for="name">Name</label>
+
+        <input type="text" id="name" required>
+
+        <label for="createEmail">Phone number or Email</label>
+
+        <input type="text" id="createEmail" required>
+
+        <label for="createPassword">Password</label>
+
+        <input type="password" id="createPassword" required>
+
+        <label for="confirmCreatePassword">Confirm Password</label>
+
+        <input type="password" id="confirmCreatePassword" required>
+
+        <button type="button" onclick="submitCreateAccount()">Create</button>
+
+      </div>
+
+      <button type="button" id="loginButton" onclick="submitLogin()">Login</button>
+
+      <div class="options-container">
+  <a href="#" onclick="showForgotPassword()" class="forgot-password">Forgot password?</a>
+  <a href="#" onclick="showCreateAccount()" class="create-account">Create account</a>
+  <a href="#" onclick="showLogin()">Back to Log in</a>
+</div>
+
+    </form>
+
+    <div class="letter" id="responseLetter"></div>
+
+    <script src="script.js"></script>
+
+  </body>
+
+  </html>
