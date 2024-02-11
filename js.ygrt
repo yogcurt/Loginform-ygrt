@@ -1,0 +1,128 @@
+let createdAccount = JSON.parse(localStorage.getItem('createdAccount')) || null;
+
+function showForgotPassword() {
+  hideAllFields();
+  showFields('forgotPasswordFields');
+}
+
+function showCreateAccount() {
+  hideAllFields();
+  showFields('createAccountFields');
+}
+
+function showLogin() {
+  hideAllFields();
+  showFields('loginFields');
+}
+
+function hideLoginButton() {
+  const loginButton = document.getElementById('loginButton');
+  if (loginButton) {
+    loginButton.style.display = 'none';
+  }
+}
+
+function showLoginButton() {
+  const loginButton = document.getElementById('loginButton');
+  if (loginButton) {
+    loginButton.style.display = 'block';
+  }
+}
+
+function submitForgotPassword() {
+  const newPassword = document.getElementById('newPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+
+  if (newPassword !== confirmPassword) {
+    showErrorMessage("Passwords do not match");
+  } else {
+    createdAccount.password = newPassword;
+    updateLocalStorage();
+    showSuccessMessage("Password changed successfully");
+  }
+}
+
+function submitCreateAccount() {
+  const name = document.getElementById('name').value;
+  const createEmail = document.getElementById('createEmail').value;
+  const createPassword = document.getElementById('createPassword').value;
+  const confirmCreatePassword = document.getElementById('confirmCreatePassword').value;
+
+  if (createPassword !== confirmCreatePassword) {
+    showErrorMessage("Passwords do not match");
+  } else {
+    createdAccount = {
+      name,
+      email: createEmail,
+      password: createPassword,
+    };
+    updateLocalStorage();
+    showSuccessMessage(`Account for ${name} created successfully`);
+  }
+}
+
+function submitLogin() {
+  const enteredEmail = document.getElementById('email').value;
+  const enteredPassword = document.getElementById('password').value;
+
+  if (!createdAccount) {
+    showErrorMessage("No account found. Please create new account.");
+    return;
+  }
+
+  if (enteredEmail !== createdAccount.email) {
+    showErrorMessage("Email not found. Please create new account.");
+    return;
+  }
+
+  if (enteredPassword !== createdAccount.password) {
+    showErrorMessage("Password didn't match. Please try again.");
+    return;
+  }
+
+  showSuccessMessage(`Successfully logged in as ${createdAccount.name}`);
+}
+
+function updateLocalStorage() {
+  localStorage.setItem('createdAccount', JSON.stringify(createdAccount));
+}
+
+function hideAllFields() {
+  const fieldDivs = ['loginFields', 'forgotPasswordFields', 'createAccountFields'];
+  fieldDivs.forEach((divId) => {
+    const element = document.getElementById(divId);
+    if (element) {
+      element.classList.add('hidden');
+    }
+  });
+
+  hideLoginButton();
+}
+
+function showFields(idToShow) {
+  const fieldToShow = document.getElementById(idToShow);
+  if (fieldToShow) {
+    fieldToShow.classList.remove('hidden');
+  }
+
+  if (idToShow === 'loginFields') {
+    showLoginButton();
+  } else {
+    hideLoginButton();
+  }
+}
+
+function showErrorMessage(message) {
+  const responseLetter = document.getElementById('responseLetter');
+  responseLetter.innerHTML = `<p style="color: red;">Error: ${message}</p>`;
+}
+
+function showSuccessMessage(message) {
+  const responseLetter = document.getElementById('responseLetter');
+  responseLetter.innerHTML = `<p style="color: green;">${message}</p>`;
+}
+
+if (createdAccount) {
+  document.getElementById('name').value = createdAccount.name;
+  document.getElementById('createEmail').value = createdAccount.email;
+}
